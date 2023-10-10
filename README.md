@@ -1,8 +1,15 @@
+## 💾 File Server API
+
+👉 [Docs](http://31.129.98.245/swagger):
+
+👉 [Admin panel](http://31.129.98.245/admin):
+
+- username: admin
+- password: 12345
 
 
-
-
-
+## 🛠 Tests
+```
 Name                                         Stmts   Miss  Cover
 ----------------------------------------------------------------
 backend/__init__.py                              2      0   100%
@@ -26,3 +33,10 @@ file_server_app/views.py                        18      2    89%
 manage.py                                       12      2    83%
 ----------------------------------------------------------------
 TOTAL                                          167      7    96%
+```
+
+
+
+
+
+
