@@ -3,11 +3,11 @@ from django.conf.urls.static import static
 from rest_framework import routers
 from django.urls import path, include
 
-from .views import UploadFileViewset, GetFileListViewset
+from .views import UploadFileView, GetFileListView
 
 router = routers.DefaultRouter()
-router.register(r"upload", UploadFileViewset, basename="upload")
-router.register(r"files", GetFileListViewset, basename="files")
+router.register(r"upload", UploadFileView, basename="upload")
+router.register(r"files", GetFileListView, basename="files")
 
 
 urlpatterns = [

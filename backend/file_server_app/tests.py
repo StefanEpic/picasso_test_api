@@ -13,3 +13,9 @@ class FileServerApiTestCase(APITestCase):
         response = self.client.post(url, data, format="multipart")
 
         self.assertEqual(status.HTTP_201_CREATED, response.status_code)
+        self.assertEqual(1, len(response.data))
+
+    def test_get_file_list(self) -> None:
+        url = "/files/"
+        response = self.client.get(url)
+        self.assertEqual(status.HTTP_200_OK, response.status_code)
