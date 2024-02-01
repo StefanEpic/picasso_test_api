@@ -1,9 +1,23 @@
 version: '3'
 
 services:
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    restart: unless-stopped
+    env_file:
+      - backend/.env
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - custom
+
   backend:
     container_name: backend
     image: backend
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./backend/Dockerfile
@@ -16,16 +30,17 @@ services:
     volumes:
       - media_volume:/backend/media
       - static_data:/backend/static
+    depends_on:
+      - db
     expose:
       - 8000
     networks:
       - custom
 
-
   redis:
     container_name: redis
     image: redis:alpine
-    restart: always
+    restart: unless-stopped
     command: redis-server
     expose:
       - 6379
@@ -34,7 +49,7 @@ services:
 
   celery:
     container_name: celery
-    restart: always
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./backend/Dockerfile
@@ -54,9 +69,10 @@ services:
       - "80:80"
     volumes:
       - media_volume:/backend/media
-      - static_data:/var/www/html/static
+      - static_data:/backend/static
       - ./devops/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
+      - db
       - backend
       - redis
       - celery
@@ -69,5 +85,6 @@ networks:
     driver: bridge
 
 volumes:
+  db-data:
   media_volume:
   static_data:
